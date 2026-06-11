@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Getinkvision ERP Login</title>
+
+    <style>
+
+        body {
+            background: #f3f4f6;
+            font-family: Arial;
+        }
+
+        .box {
+            width: 350px;
+            background: white;
+            margin: 100px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background: #111827;
+            color: white;
+            border: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="box">
+
+    <div style="text-align:center;">
+
+        <img th:src="@{/images/logo2.png}"
+             alt="Company Logo"
+             style="width:80px;height:80px;">
+
+        <h2>
+            Getinkvision ERP Login
+        </h2>
+
+    </div>
+
+    <form action="/login" method="post">
+
+        <input type="text" name="username" placeholder="Username">
+
+        <input type="password" name="password" placeholder="Password">
+
+        <button type="submit">Login</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Orders & Payments</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial;
+        }
+
+        body{
+            background:#f1f5f9;
+            padding:35px;
+        }
+
+        .container{
+            max-width:1400px;
+            margin:auto;
+        }
+
+        .header,.form-section,.table-section{
+            background:white;
+            padding:25px;
+            border-radius:18px;
+            margin-bottom:25px;
+            box-shadow:0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .info-box{
+            background:#fefce8;
+            border-left:6px solid #ca8a04;
+            padding:20px;
+            border-radius:14px;
+            margin-bottom:25px;
+        }
+
+        .form-grid{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:18px;
+        }
+
+        input,select,button{
+            padding:14px;
+            border-radius:10px;
+            border:1px solid #cbd5e1;
+        }
+
+        button{
+            background:#ca8a04;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            text-align:center;
+        }
+
+        th{
+            background:#0f172a;
+            color:white;
+            padding:16px;
+        }
+
+        td{
+            padding:16px;
+            border-bottom:1px solid #e2e8f0;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>Orders & Payment Tracking</h1>
+
+        <p>
+            Track dispatch workflow,
+            customer orders & payment status.
+        </p>
+
+    </div>
+
+    <div class="info-box">
+
+        Dispatch Tracking Active • Payment Monitoring Enabled
+
+    </div>
+
+    <div class="form-section">
+
+        <form th:action="${order != null} ? @{/orders/update} : @{/orders/add}"
+              method="post">
+
+            <input type="hidden"
+                   name="id"
+                   th:value="${order != null ? order.id : ''}">
+
+            <div class="form-grid">
+
+                <input type="text"
+                       name="customerName"
+                       placeholder="Customer Name"
+                       th:value="${order != null ? order.customerName : ''}"
+                       required>
+
+                <select name="status">
+
+                    <option value="Pending"
+                            th:selected="${order != null && order.status=='Pending'}">
+                        Pending
+                    </option>
+
+                    <option value="Dispatched"
+                            th:selected="${order != null && order.status=='Dispatched'}">
+                        Dispatched
+                    </option>
+
+                </select>
+
+                <select name="paymentStatus">
+
+                    <option value="Paid"
+                            th:selected="${order != null && order.paymentStatus=='Paid'}">
+                        Paid
+                    </option>
+
+                    <option value="Pending"
+                            th:selected="${order != null && order.paymentStatus=='Pending'}">
+                        Pending
+                    </option>
+
+                </select>
+
+                <button type="submit"
+                        th:text="${order != null ? 'Update Order' : 'Create Order'}">
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="table-section">
+
+        <table>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Customer Name</th>
+                <th>Status</th>
+                <th>Payment Status</th>
+
+            </tr>
+
+            <tr th:each="o : ${orders}"
+                th:onclick="|window.location='/orders/edit/${o.id}'|"
+                style="cursor:pointer;">
+
+                <td th:text="${o.id}"></td>
+
+                <td th:text="${o.customerName}"></td>
+
+                <td th:text="${o.status}"></td>
+
+                <td th:text="${o.paymentStatus}"></td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
