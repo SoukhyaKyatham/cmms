@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Machine Maintenance</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial;
+        }
+
+        body{
+            background:#f1f5f9;
+            padding:35px;
+        }
+
+        .container{
+            max-width:1400px;
+            margin:auto;
+        }
+
+        .header,.form-section,.table-section{
+            background:white;
+            padding:25px;
+            border-radius:18px;
+            margin-bottom:25px;
+            box-shadow:0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .info-box{
+            background:#f0fdf4;
+            border-left:6px solid green;
+            padding:20px;
+            border-radius:14px;
+            margin-bottom:25px;
+        }
+
+        .form-grid{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:18px;
+        }
+
+        input,select,button{
+            padding:14px;
+            border-radius:10px;
+            border:1px solid #cbd5e1;
+        }
+
+        button{
+            background:green;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            text-align:center;
+        }
+
+        th{
+            background:#0f172a;
+            color:white;
+            padding:16px;
+        }
+
+        td{
+            padding:16px;
+            border-bottom:1px solid #e2e8f0;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>Machine Maintenance Tracking</h1>
+
+        <p>
+            Track mixers, filling machines,
+            maintenance workflow & operational status.
+        </p>
+
+    </div>
+
+    <div class="info-box">
+
+        Maintenance Monitoring Enabled • Machine Health Active
+
+    </div>
+
+    <div class="form-section">
+        <form th:action="${machine != null} ? @{/machines/update} : @{/machines/add}"
+              method="post">
+
+            <input type="hidden"
+                   name="id"
+                   th:value="${machine != null ? machine.id : ''}">
+
+            <div class="form-grid">
+
+                <input type="text"
+                       name="name"
+                       placeholder="Machine Name"
+                       th:value="${machine != null ? machine.name : ''}"
+                       required>
+
+                <select name="status">
+
+                    <option value="Working"
+                            th:selected="${machine != null && machine.status=='Working'}">
+                        Working
+                    </option>
+
+                    <option value="Maintenance"
+                            th:selected="${machine != null && machine.status=='Maintenance'}">
+                        Maintenance
+                    </option>
+
+                </select>
+
+                <button type="submit"
+                        th:text="${machine != null ? 'Update Machine' : 'Add Machine'}">
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="table-section">
+
+        <table>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Machine Name</th>
+                <th>Status</th>
+
+            </tr>
+
+            <tr th:each="m : ${machines}"
+                th:onclick="|window.location='/machines/edit/${m.id}'|"
+                style="cursor:pointer;">
+
+                <td th:text="${m.id}"></td>
+
+                <td th:text="${m.name}"></td>
+
+                <td th:text="${m.status}"></td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

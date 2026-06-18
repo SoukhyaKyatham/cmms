@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chemical Inventory</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial;
+        }
+
+        body{
+            background:#f1f5f9;
+            padding:35px;
+        }
+
+        .container{
+            max-width:1400px;
+            margin:auto;
+        }
+
+        /* HEADER */
+
+        .header{
+            background:white;
+            padding:28px;
+            border-radius:18px;
+            margin-bottom:25px;
+            box-shadow:0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .header h1{
+            color:#0f172a;
+            margin-bottom:10px;
+        }
+
+        .header p{
+            color:gray;
+        }
+
+        /* SAFETY INFO */
+
+        .info-box{
+            background:#fff7ed;
+            border-left:6px solid orange;
+            padding:20px;
+            border-radius:14px;
+            margin-bottom:25px;
+        }
+
+        /* FORM */
+
+        .form-section{
+            background:white;
+            padding:25px;
+            border-radius:18px;
+            margin-bottom:30px;
+            box-shadow:0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .form-grid{
+            display:grid;
+            grid-template-columns:repeat(5,1fr);
+            gap:18px;
+            align-items:center;
+        }
+
+        input{
+            width:100%;
+            padding:14px;
+            border:1px solid #cbd5e1;
+            border-radius:10px;
+            font-size:15px;
+        }
+
+        button{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            background:#0284c7;
+            color:white;
+            font-size:15px;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        button:hover{
+            background:#0369a1;
+        }
+
+        /* TABLE */
+
+        .table-section{
+            background:white;
+            padding:25px;
+            border-radius:18px;
+            box-shadow:0 3px 10px rgba(0,0,0,0.08);
+            overflow-x:auto;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            text-align:center;
+        }
+
+        table th{
+            background:#0f172a;
+            color:white;
+            padding:16px;
+        }
+
+        table td{
+            padding:16px;
+            border-bottom:1px solid #e2e8f0;
+        }
+
+        tr:hover{
+            background:#f8fafc;
+        }
+
+        /* STATUS */
+
+        .safe{
+            color:green;
+            font-weight:bold;
+        }
+
+        .danger{
+            color:red;
+            font-weight:bold;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:1100px){
+
+            .form-grid{
+                grid-template-columns:1fr 1fr;
+            }
+
+        }
+
+        @media(max-width:700px){
+
+            .form-grid{
+                grid-template-columns:1fr;
+            }
+
+        }
+        .product-grid{
+
+            display:grid;
+
+            grid-template-columns:
+repeat(auto-fit,minmax(320px,1fr));
+
+            gap:25px;
+
+            margin-top:30px;
+
+        }
+
+        .product-card{
+
+            background:white;
+
+            padding:20px;
+
+            border-radius:18px;
+
+            box-shadow:
+                    0 5px 20px rgba(0,0,0,.1);
+
+            transition:.3s;
+
+        }
+
+        .product-card:hover{
+
+            transform:translateY(-5px);
+
+        }
+
+        .product-image{
+
+            width:100%;
+
+            height:250px;
+
+            object-fit:cover;
+
+            border-radius:12px;
+
+            margin-bottom:15px;
+
+            cursor:pointer;
+
+            transition:0.3s;
+
+        }
+
+        .product-image:hover{
+
+            transform:scale(1.03);
+
+        }
+
+        textarea{
+
+            width:100%;
+
+            height:100px;
+
+            padding:12px;
+
+            margin:10px 0;
+
+            border-radius:10px;
+
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>Chemical Raw Material Inventory</h1>
+
+        <p>
+            Manage chemical batches, expiry monitoring,
+            hazardous material traceability & stock tracking.
+        </p>
+
+    </div>
+
+    <!-- INFO -->
+
+    <div class="info-box">
+
+        MSDS Compliance Active • Hazard Monitoring Enabled •
+        Expiry Alerts Running • Batch Traceability Enabled
+
+    </div>
+
+    <!-- FORM -->
+
+    <div class="form-section">
+
+        <h2 style="margin-bottom:20px;">
+            Add Product Catalog Item
+        </h2>
+
+        <form action="/chemicals/add" method="post">
+            <input type="hidden" id="id" name="id">
+            <div class="form-grid">
+
+                <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Product Name">
+
+                <input
+                        type="text"
+                        id="batchNo"
+                        name="batchNo"
+                        placeholder="Batch Number">
+
+                <input
+                        type="date"
+                        id="expiryDate"
+                        name="expiryDate">
+
+                <input
+                        type="number"
+                        id="quantity"
+                        name="quantity"
+                        placeholder="Quantity">
+
+                <input
+                        type="text"
+                        id="specification"
+                        name="specification"
+                        placeholder="Specifications">
+
+                <input
+                        type="text"
+                        id="rawMaterial"
+                        name="rawMaterial"
+                        placeholder="Raw Material">
+
+                <input
+                        type="text"
+                        id="imageUrl"
+                        name="imageUrl"
+                        placeholder="Image URL">
+
+                <textarea
+                        id="description"
+                        name="description"
+                        placeholder="Product Description"></textarea>
+
+                <button type="submit">
+                    Save Product
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- TABLE -->
+
+    <div class="table-section">
+
+        <table>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Chemical</th>
+                <th>Batch No</th>
+                <th>Expiry</th>
+                <th>Quantity</th>
+                <th>Status</th>
+
+            </tr>
+
+            <tr th:each="c : ${chemicals}"
+                style="cursor:pointer"
+                th:attr="
+    data-id=${c.id},
+    data-name=${c.name},
+    data-batch=${c.batchNo},
+    data-expiry=${c.expiryDate},
+    data-quantity=${c.quantity},
+    data-specification=${c.specification},
+    data-rawmaterial=${c.rawMaterial},
+    data-description=${c.description},
+    data-imageurl=${c.imageUrl}"
+                onclick="editChemical(this)">
+
+                <td th:text="${c.id}"></td>
+
+                <td th:text="${c.name}"></td>
+
+                <td th:text="${c.batchNo}"></td>
+
+                <td th:text="${c.expiryDate}"></td>
+
+                <td th:text="${c.quantity}"></td>
+
+                <td>
+
+        <span class="safe">
+            Safe
+        </span>
+
+                </td>
+
+
+
+            </tr>
+
+
+        </table>
+
+    </div>
+    <div class="product-grid">
+
+        <div
+                class="product-card"
+                th:each="c:${chemicals}">
+
+            <a th:href="${c.imageUrl}" target="_blank">
+
+                <img
+                        th:src="${c.imageUrl}"
+                        class="product-image">
+
+            </a>
+
+            <h3 th:text="${c.name}"></h3>
+
+            <p th:text="${c.description}"></p>
+
+            <p>
+                <b>Specifications:</b>
+                <span th:text="${c.specification}"></span>
+            </p>
+
+            <p>
+                <b>Raw Material:</b>
+                <span th:text="${c.rawMaterial}"></span>
+            </p>
+
+            <p>
+                <b>Batch:</b>
+                <span th:text="${c.batchNo}"></span>
+            </p>
+
+        </div>
+
+    </div>
+</div>
+<script>
+
+    function editChemical(row){
+
+        document.getElementById("id").value =
+            row.dataset.id;
+
+        document.getElementById("name").value =
+            row.dataset.name;
+
+        document.getElementById("batchNo").value =
+            row.dataset.batch;
+
+        document.getElementById("expiryDate").value =
+            row.dataset.expiry;
+
+        document.getElementById("quantity").value =
+            row.dataset.quantity;
+
+        document.getElementById("specification").value =
+            row.dataset.specification;
+
+        document.getElementById("rawMaterial").value =
+            row.dataset.rawmaterial;
+
+        document.getElementById("description").value =
+            row.dataset.description;
+
+        document.getElementById("imageUrl").value =
+            row.dataset.imageurl;
+
+        window.scrollTo({
+            top:0,
+            behavior:'smooth'
+        });
+    }
+
+</script>
+</body>
+</html>
