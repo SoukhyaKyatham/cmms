@@ -34,7 +34,7 @@ public class HomeController {
         return "redirect:/login";
     }
 
-    @GetMapping("/")
+    @GetMapping("/dashboard")
     public String dashboard(Model model){
 
         model.addAttribute("chemicalCount",
