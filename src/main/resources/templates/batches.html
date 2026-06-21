@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Production Batch Tracking</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial;
+        }
+
+        body{
+            background:#f1f5f9;
+            padding:35px;
+        }
+
+        .container{
+            max-width:1400px;
+            margin:auto;
+        }
+
+        .header,.form-section,.table-section{
+            background:white;
+            padding:25px;
+            border-radius:18px;
+            margin-bottom:25px;
+            box-shadow:0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .info-box{
+            background:#eff6ff;
+            border-left:6px solid #2563eb;
+            padding:20px;
+            border-radius:14px;
+            margin-bottom:25px;
+        }
+
+        .form-grid{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:18px;
+        }
+
+        input,button{
+            padding:14px;
+            border-radius:10px;
+            border:1px solid #cbd5e1;
+        }
+
+        button{
+            background:#2563eb;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            text-align:center;
+        }
+
+        th{
+            background:#0f172a;
+            color:white;
+            padding:16px;
+        }
+
+        td{
+            padding:16px;
+            border-bottom:1px solid #e2e8f0;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>Production Batch Tracking</h1>
+
+        <p>
+            Monitor industrial batch production,
+            manufacturing traceability & quality workflow.
+        </p>
+
+    </div>
+
+    <div class="info-box">
+
+        Batch Traceability Enabled • Production Monitoring Active
+
+    </div>
+
+    <div class="form-section">
+        <form th:action="${batch != null} ? @{/batches/update} : @{/batches/add}"
+              method="post">
+
+            <input type="hidden"
+                   name="id"
+                   th:value="${batch != null ? batch.id : ''}">
+
+            <div class="form-grid">
+
+                <input type="text"
+                       name="productName"
+                       placeholder="Product Name"
+                       th:value="${batch != null ? batch.productName : ''}"
+                       required>
+
+                <input type="text"
+                       name="batchId"
+                       placeholder="Batch ID"
+                       th:value="${batch != null ? batch.batchId : ''}"
+                       required>
+
+                <input type="number"
+                       name="quantityProduced"
+                       placeholder="Quantity Produced"
+                       th:value="${batch != null ? batch.quantityProduced : ''}"
+                       required>
+
+                <button type="submit"
+                        th:text="${batch != null ? 'Update Batch' : 'Create Batch'}">
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="table-section">
+
+        <table>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Batch ID</th>
+                <th>Quantity Produced</th>
+
+            </tr>
+            <tr th:each="b : ${batches}"
+                th:onclick="|window.location='/batches/edit/${b.id}'|"
+                style="cursor:pointer;">
+
+                <td th:text="${b.id}"></td>
+
+                <td th:text="${b.productName}"></td>
+
+                <td th:text="${b.batchId}"></td>
+
+                <td th:text="${b.quantityProduced}"></td>
+
+            </tr>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

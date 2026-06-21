@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Supplier Management</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial;
+        }
+
+        body{
+            background:#f1f5f9;
+            padding:35px;
+        }
+
+        .container{
+            max-width:1400px;
+            margin:auto;
+        }
+
+        .header,.form-section,.table-section{
+            background:white;
+            padding:25px;
+            border-radius:18px;
+            margin-bottom:25px;
+            box-shadow:0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .info-box{
+            background:#ecfeff;
+            border-left:6px solid #0891b2;
+            padding:20px;
+            border-radius:14px;
+            margin-bottom:25px;
+        }
+
+        .form-grid{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:18px;
+        }
+
+        input,button{
+            padding:14px;
+            border-radius:10px;
+            border:1px solid #cbd5e1;
+        }
+
+        button{
+            background:#0891b2;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            text-align:center;
+        }
+
+        th{
+            background:#0f172a;
+            color:white;
+            padding:16px;
+        }
+
+        td{
+            padding:16px;
+            border-bottom:1px solid #e2e8f0;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>Supplier & Purchase Tracking</h1>
+
+        <p>
+            Manage chemical suppliers,
+            procurement workflow & lead time monitoring.
+        </p>
+
+    </div>
+
+    <div class="info-box">
+
+        Procurement Tracking Active • Vendor Monitoring Enabled
+
+    </div>
+
+    <div class="form-section">
+
+        <form th:action="${supplier != null} ? @{/suppliers/update} : @{/suppliers/add}"
+              method="post">
+
+            <input type="hidden"
+                   name="id"
+                   th:value="${supplier != null ? supplier.id : ''}">
+
+            <div class="form-grid">
+
+                <input type="text"
+                       name="name"
+                       placeholder="Supplier Name"
+                       th:value="${supplier != null ? supplier.name : ''}"
+                       required>
+
+                <input type="text"
+                       name="contact"
+                       placeholder="Contact"
+                       th:value="${supplier != null ? supplier.contact : ''}"
+                       required>
+
+                <input type="number"
+                       name="leadTime"
+                       placeholder="Lead Time"
+                       th:value="${supplier != null ? supplier.leadTime : ''}"
+                       required>
+
+                <button type="submit"
+                        th:text="${supplier != null ? 'Update Supplier' : 'Add Supplier'}">
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="table-section">
+
+        <table>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Supplier Name</th>
+                <th>Contact</th>
+                <th>Lead Time</th>
+
+            </tr>
+
+            <tr th:each="s : ${suppliers}"
+                th:onclick="|window.location='/suppliers/edit/${s.id}'|"
+                style="cursor:pointer;">
+
+                <td th:text="${s.id}"></td>
+
+                <td th:text="${s.name}"></td>
+
+                <td th:text="${s.contact}"></td>
+
+                <td th:text="${s.leadTime}"></td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
