@@ -30,6 +30,11 @@ public class HomeController {
     OrderRepository orderRepository;
 
     @GetMapping("/")
+    public String home() {
+        return "redirect:/login";
+    }
+
+    @GetMapping("/")
     public String dashboard(Model model){
 
         model.addAttribute("chemicalCount",
