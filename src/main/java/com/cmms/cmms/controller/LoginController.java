@@ -18,7 +18,7 @@ public class LoginController {
     ) {
 
         if(username.equals("admin") && password.equals("admin123")) {
-            return "redirect:/";
+            return "redirect:/dashboard";
         }
 
         return "login";
